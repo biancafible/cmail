@@ -1,0 +1,69 @@
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+    <cmail-header></cmail-header>
+    <main class="mdl-layout__content">
+      <div class="page-content">
+
+        <p *ngIf="mensagem">
+          {{mensagem}}
+        </p>
+        
+        <div class="mdl-grid">
+          <form [formGroup]="formCadastro" (ngSubmit)="handleCadastro()">
+            
+            <cmail-form-group idCampo="nome" textoDaLabel="Nome" [isInvalid]="nome.invalid && nome.touched">
+
+              <input formControlName="nome" required type="text" name="nome" cmailFormField>
+
+              <span *ngIf="nome.getError('required')" class="mdl-textfield__error">Informar um nome é obrigatório!</span>
+
+              <span *ngIf="nome.getError('minlength')" class="mdl-textfield__error">O nome deve conter {{nome.getError('minlength').requiredLength}} caracteres</span>
+
+              <span *ngIf="nome.getError('maxlength')" class="mdl-textfield__error">O nome deve conter até {{nome.getError('maxlength').requiredLength}} caracteres</span>
+
+              <span *ngIf="nome.getError('pattern')" class="mdl-textfield__error">O nome deve conter apenas letras</span>
+              
+
+            </cmail-form-group>
+
+            <cmail-form-group idCampo="username" textoDaLabel="Nome de usuário" [isInvalid]="username.invalid && username.touched">
+              <input formControlName="username" required type="text" name="username" cmailFormField>
+              <span *ngIf="username.getError('required')" class="mdl-textfield__error">Informar um nome de usuário é obrigatório!</span>
+              <span *ngIf="username.getError('minlength')" class="mdl-textfield__error">O usuário deve conter {{username.getError('minlength').requiredLength}} caracteres</span>
+              <span *ngIf="username.getError('maxlength')" class="mdl-textfield__error">O usuário deve conter até {{username.getError('maxlength').requiredLength}} caracteres</span>
+              <span *ngIf="username.getError('pattern')" class="mdl-textfield__error">O usuário deve conter apenas letras</span> 
+            </cmail-form-group>
+
+            <cmail-form-group idCampo="senha" textoDaLabel="Senha" [isInvalid]="senha.invalid && senha.touched">
+              <input formControlName="senha" required type="password" name="senha" cmailFormField>
+              <span *ngIf="senha.getError('required')" class="mdl-textfield__error">Informar uma senha é obrigatório!</span>
+              <span *ngIf="senha.getError('minlength')" class="mdl-textfield__error">A senha deve conter {{senha.getError('minlength').requiredLength}} caracteres</span>
+              <span *ngIf="senha.getError('maxlength')" class="mdl-textfield__error">A senha deve conter até {{senha.getError('maxlength').requiredLength}} caracteres</span>
+              <span *ngIf="senha.getError('pattern')" class="mdl-textfield__error">A senha deve conter apenas letras</span> 
+            </cmail-form-group>
+
+            <cmail-form-group idCampo="avatar" textoDaLabel="Avatar" [isInvalid]="false">
+              <input formControlName="avatar" required type="text" name="avatar" cmailFormField>
+              <span class="mdl-textfield__error">Informar um avatar é obrigatório!</span>
+            </cmail-form-group>
+            
+            <cmail-form-group idCampo="telefone" textoDaLabel="Telefone" [isInvalid]="false">
+              <input formControlName="telefone" required type="text" name="telefone" cmailFormField>
+              <span *ngIf="senha.getError('required')" class="mdl-textfield__error">Informar um telefone é obrigatório!</span>
+              <span *ngIf="senha.getError('minlength')" class="mdl-textfield__error">O telefone deve conter {{senha.getError('minlength').requiredLength}} caracteres</span>
+              <span *ngIf="senha.getError('maxlength')" class="mdl-textfield__error">O telefone deve conter até {{senha.getError('maxlength').requiredLength}} caracteres</span>
+              <span *ngIf="senha.getError('pattern')" class="mdl-textfield__error">O telefone deve conter apenas letras</span> 
+ 
+            </cmail-form-group>
+
+
+            <div class="mdl-card__actions">
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
+                Cadastrar
+              </button>
+            </div>
+  
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
