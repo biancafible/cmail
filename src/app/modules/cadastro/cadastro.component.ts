@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
+import { HttpClient, HttpErrorResponse, HttpResponse, HttpResponseBase } from '@angular/common/http';
 import { UserInputDTO } from './user-input';
 import { Router } from '@angular/router';
+import { map, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'cmail-cadastro',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
   styles: []
 })
 export class CadastroComponent implements OnInit {
-  
+
   mensagem ="";
 
   private validatoresNome = Validators.compose([
@@ -61,16 +62,37 @@ export class CadastroComponent implements OnInit {
   }
 
   validaImagem(){
+
+    const erroValidacao={
+      urlInvalida: true
+    }
     return this.httpRequest
-              .get(this.avatar.value, {observe: "response"}).pipe()
+              .head(
+                this.avatar.value, 
+                {observe: 'response'}
+              )
+              .pipe(
+                map((resposta: HttpResponseBase) => {
+                  const contentType = resposta.headers.get('Content-Type')
+
+                  if(resposta.ok && contentType.includes('image')){
+                    //null quer dizer que nao tem erros de validacao
+                    return null
+                  } else {
+                    return erroValidacao
+                  }
+                })
+                ,catchError(() => [erroValidacao])
+                )
+              
   }
 
   handleCadastro(){
 
-   if(this.formCadastro.invalid){
-     return;
-   }
-
+   if(this.formCadastro.invalid) {
+    this.formCadastro.markAllAsTouched();
+    return;
+  }
     const userDTO = new UserInputDTO(this.formCadastro.value);
 
     console.log(userDTO);
@@ -93,7 +115,7 @@ export class CadastroComponent implements OnInit {
             }, 3000);
           }
         );
-    
+
   }
 
 }
