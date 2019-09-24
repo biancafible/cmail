@@ -41,20 +41,19 @@
               <span *ngIf="senha.getError('pattern')" class="mdl-textfield__error">A senha deve conter apenas letras</span> 
             </cmail-form-group>
 
-            <cmail-form-group idCampo="avatar" textoDaLabel="Avatar" [isInvalid]="false">
+            <cmail-form-group idCampo="avatar" textoDaLabel="Avatar" [isInvalid]="avatar.invalid && avatar.touched">
               <input formControlName="avatar" required type="text" name="avatar" cmailFormField>
-              <span class="mdl-textfield__error">Informar um avatar é obrigatório!</span>
+              <span *ngIf="avatar.getError('required')" class="mdl-textfield__error">Informar um avatar é obrigatório!</span>
+
             </cmail-form-group>
             
-            <cmail-form-group idCampo="telefone" textoDaLabel="Telefone" [isInvalid]="false">
+            <cmail-form-group idCampo="telefone" textoDaLabel="Telefone" [isInvalid]="telefone.invalid && telefone.touched">
               <input formControlName="telefone" required type="text" name="telefone" cmailFormField>
-              <span *ngIf="senha.getError('required')" class="mdl-textfield__error">Informar um telefone é obrigatório!</span>
-              <span *ngIf="senha.getError('minlength')" class="mdl-textfield__error">O telefone deve conter {{senha.getError('minlength').requiredLength}} caracteres</span>
-              <span *ngIf="senha.getError('maxlength')" class="mdl-textfield__error">O telefone deve conter até {{senha.getError('maxlength').requiredLength}} caracteres</span>
-              <span *ngIf="senha.getError('pattern')" class="mdl-textfield__error">O telefone deve conter apenas letras</span> 
- 
+              <span *ngIf="telefone.getError('required')" class="mdl-textfield__error">Informar um telefone é obrigatório! </span>
+              <span *ngIf="telefone.getError('minlength')" class="mdl-textfield__error"> O telefone deve conter no mínimo {{telefone.getError('minlength').requiredLength}} caracteres   </span>
+              <span *ngIf="telefone.getError('maxlength')" class="mdl-textfield__error"> O telefone deve conter no max {{telefone.getError('maxlength').requiredLength}} caracteres     </span>
+              <span *ngIf="telefone.getError('pattern') && !telefone.getError('minlength')" class="mdl-textfield__error"> o telefone deve conter apenas numeros!</span>
             </cmail-form-group>
-
 
             <div class="mdl-card__actions">
               <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">

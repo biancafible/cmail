@@ -44,20 +44,25 @@ export class CadastroComponent implements OnInit {
   public username = new FormControl ('', this.validadoresUsername);
   public senha = new FormControl ('', this.validadoresSenha);
   public telefone = new FormControl ('', this.validadoresTelefone);
-
+  public avatar = new FormControl('', Validators.required, this.validaImagem.bind(this));
 
   formCadastro = new FormGroup({
     nome: this.nome,
     username: this.username,
     senha: this.senha,
-    avatar: new FormControl('', Validators.required),
+    avatar: this.avatar,
     telefone: this.telefone
 
   })
 
-  constructor(private conexaoApi: HttpClient, private roteador: Router) { }
+  constructor(private httpRequest: HttpClient, private roteador: Router) { }
 
   ngOnInit() {
+  }
+
+  validaImagem(){
+    return this.httpRequest
+              .get(this.avatar.value, {observe: "response"}).pipe()
   }
 
   handleCadastro(){
@@ -72,7 +77,7 @@ export class CadastroComponent implements OnInit {
 
 
 
-    this.conexaoApi
+    this.httpRequest
         .post('http://localhost:3200/users', userDTO)
         .subscribe(
           resposta => {
