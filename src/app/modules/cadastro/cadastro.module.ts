@@ -4,6 +4,7 @@ import { CadastroComponent } from './cadastro.component';
 import { SharedComponentsModule } from 'src/app/components/shared-components.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { CadastroRoutingModule } from './cadastro-routing.module';
 
 
 
@@ -15,7 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
     CommonModule,
     SharedComponentsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    CadastroRoutingModule
     
   ],
   

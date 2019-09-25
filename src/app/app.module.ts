@@ -2,11 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Directive } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { CaixaDeEntradaModule } from './modules/caixa-de-entrada/caixa-de-entrada.module';
-import { ModuloRoteamento } from 'src/app.routes';
-import { SharedComponentsModule } from './components/shared-components.module';
-import { CadastroModule } from './modules/cadastro/cadastro.module';
-import { LoginModule } from './modules/login/login.module';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -14,11 +10,7 @@ import { LoginModule } from './modules/login/login.module';
   ],
   imports: [
     BrowserModule,
-    CaixaDeEntradaModule,
-    SharedComponentsModule,
-    CadastroModule,
-    LoginModule,
-    ModuloRoteamento
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
