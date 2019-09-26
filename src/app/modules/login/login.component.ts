@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { LoginService } from 'src/app/services/login.service';
+import { LoginOutput } from 'src/app/models/dto/login-output';
 
 @Component({
   selector: 'cmail-login',
@@ -40,26 +42,23 @@ export class LoginComponent implements OnInit {
 
   
 
-  constructor(private httpClient: HttpClient, private roteador: Router) { }
+  constructor(private httpClient: HttpClient, private roteador: Router, private loginService: LoginService) { }
 
   ngOnInit() {
   }
 
-  handleLogin(formLogin: NgForm){
+  handleLogin(){
     if(this.formLogin.invalid) {
       this.formLogin.markAllAsTouched();
       return;
     }
     console.log(this.login);
 
-    this.httpClient
-        .post('http://localhost:3200/login', this.formLogin.value)
-        .subscribe((response: any) => {
+    this.loginService
+        .autenticar(this.formLogin.value)
+        .subscribe((response: LoginOutput) => {
             console.log(response);
             console.log('deu certo');
-            localStorage.setItem('cmail-token', response.token)
-    
-            
           }, (error) =>{
             console.error(error);
             console.log('deu ruim');

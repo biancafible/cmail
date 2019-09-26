@@ -3,9 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CadastroComponent } from './cadastro.component';
 
 
-const routes: Routes = [
-  {path: '', component: CadastroComponent}
-];
+const routes: Routes = [ {path: '', component: CadastroComponent} ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

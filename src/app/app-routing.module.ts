@@ -1,5 +1,6 @@
 import { Routes, RouterModule } from "@angular/router";
 import { NgModule } from '@angular/core';
+import { AuthGuard } from './guards/auth.guard';
 
 const appRoutes: Routes = [
     {
@@ -13,7 +14,7 @@ const appRoutes: Routes = [
     ,{
         path: 'inbox',
         loadChildren: () => import('./modules/caixa-de-entrada/caixa-de-entrada.module').then(m => m.CaixaDeEntradaModule)
-        ,pathMatch: 'full'
+        ,canActivate:[AuthGuard]
     }
     ,{
         path: '',
@@ -33,7 +34,7 @@ const appRoutes: Routes = [
     ],
     exports: [
         RouterModule
-    ]
+    ], providers:[AuthGuard]
 })
 
 export class AppRoutingModule { }

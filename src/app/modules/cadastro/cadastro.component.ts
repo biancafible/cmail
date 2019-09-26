@@ -4,6 +4,7 @@ import { HttpClient, HttpErrorResponse, HttpResponseBase } from '@angular/common
 import { UserInputDTO } from './user-input';
 import { Router } from '@angular/router';
 import { map, catchError } from 'rxjs/operators';
+import { CadastroService } from 'src/app/services/cadastro.service';
 
 @Component({
   selector: 'cmail-cadastro',
@@ -56,7 +57,7 @@ export class CadastroComponent implements OnInit {
 
   })
 
-  constructor(private httpRequest: HttpClient, private roteador: Router) { }
+  constructor(private httpRequest: HttpClient, private roteador: Router, private cadastroService: CadastroService) { }
 
   ngOnInit() {
   }
@@ -97,25 +98,13 @@ export class CadastroComponent implements OnInit {
 
     console.log(userDTO);
 
-
-
-    this.httpRequest
-        .post('http://localhost:3200/users', userDTO)
-        .subscribe(
-          resposta => {
-            console.log(resposta);
-            this.mensagem = "Cadastro feito com sucesso!"
-            this.formCadastro.reset();
-          }, (erro: HttpErrorResponse) =>{
-            this.mensagem = erro.error.body[0].message;
-          }
-          ,() => {
-            setTimeout(() => {
-            this.roteador.navigate(['login']);
-            }, 3000);
-          }
+    this.cadastroService
+      .autenticar(userDTO)
+        .subscribe( 
+          () => {}
+          ,(erro: HttpErrorResponse) => this.mensagem = erro.error.body[0].message          
+           ,() => this.roteador.navigate(['login'])
         );
-
   }
 
 }
