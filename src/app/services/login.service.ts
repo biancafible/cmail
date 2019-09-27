@@ -22,7 +22,7 @@ export class LoginService {
          .post(this.url, loginDto)
          .pipe(
              map((response:any) => {
-                localStorage.setItem('TOKEN', response.token)
+                localStorage.setItem('cmail-token', response.token)
                 return response;
              }
                 )

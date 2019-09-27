@@ -1,17 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { EmailService } from 'src/app/services/email.service';
 
 
 @Component({
   selector: 'cmail-caixa-de-entrada',
   templateUrl: './caixa-de-entrada.component.html',
-  styles: []
+  styles: [ `ul, li{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }`
+  ]
 })
 export class CaixaDeEntradaComponent implements OnInit {
 
-  constructor() { }
+  constructor(private emailService: EmailService) { }
 
   ngOnInit() {
+
+    this.emailService
+      .listar()
+      .subscribe((listaEmailApi) => {
+        this.listaEmail = listaEmailApi;
+      }), erro => console.log(erro);
+      
   }
   email={
     destinatario:'',
@@ -36,14 +49,28 @@ export class CaixaDeEntradaComponent implements OnInit {
       formEmail.control.markAllAsTouched();
       return;
 
-    }
-      this.listaEmail.push({
-        destinatario: this.email.destinatario,
-        assunto: this.email.assunto,
-        conteudo: this.email.conteudo
-      })
+    }     
+    
+    this.emailService
+        .enviar(this.email).subscribe(
+          (resposta) => {
+            console.log('deu certo', resposta);
 
-      formEmail.resetForm()
+            this.listaEmail.push({
+              destinatario: resposta.to,
+              assunto: resposta.subject,
+              conteudo: resposta.content
+            });
+
+            formEmail.resetForm();
+            
+          }
+          , (erro) => {
+            console.log('deu ruim', erro);
+            
+          }
+        )
+      
   }
 
 }
