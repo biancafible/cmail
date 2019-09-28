@@ -3,6 +3,7 @@ import { NgModule, Directive } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { PageDataService } from './services/page-data.service';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [PageDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

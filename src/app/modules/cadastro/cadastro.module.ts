@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CadastroRoutingModule } from './cadastro-routing.module';
 import { CadastroService } from 'src/app/services/cadastro.service';
+import { PageDataService } from 'src/app/services/page-data.service';
 
 @NgModule({
   declarations: [CadastroComponent],
@@ -18,6 +19,6 @@ import { CadastroService } from 'src/app/services/cadastro.service';
     CadastroRoutingModule
     
   ],
-  providers: [CadastroService]
+  providers: [CadastroService , PageDataService]
 })
 export class CadastroModule { }

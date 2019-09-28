@@ -12,7 +12,8 @@ import { Email } from '../models/dto/email';
 @Injectable()
 export class EmailService{
 
-    private url = environment.api+'emails';
+
+    private url = environment.api+'emails/';
     private headerOptions ={
         headers: new HttpHeaders({'Authorization': localStorage.getItem('cmail-token')})
     }
@@ -20,6 +21,9 @@ export class EmailService{
     constructor(private http: HttpClient){
 
     }
+
+    
+
     enviar(email: EmailForm): Observable<EmailOutput> {
 
         const emailDTO: EmailInput = {
@@ -30,6 +34,9 @@ export class EmailService{
         
         return this.http.post<EmailOutput>(this.url,emailDTO,this.headerOptions)
     }
+
+
+
     listar(): Observable<Email[]>{
         return this.http
                     .get<EmailOutput[]>(this.url,this.headerOptions)
@@ -46,4 +53,12 @@ export class EmailService{
                         )
                     )
     }
+
+    deletar(id){
+        return this
+                .http
+                .delete(this.url+id, this.headerOptions)
+        
+    }
+    
 }

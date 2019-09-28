@@ -5,6 +5,7 @@ import { UserInputDTO } from './user-input';
 import { Router } from '@angular/router';
 import { map, catchError } from 'rxjs/operators';
 import { CadastroService } from 'src/app/services/cadastro.service';
+import { PageDataService } from 'src/app/services/page-data.service';
 
 @Component({
   selector: 'cmail-cadastro',
@@ -57,9 +58,15 @@ export class CadastroComponent implements OnInit {
 
   })
 
-  constructor(private httpRequest: HttpClient, private roteador: Router, private cadastroService: CadastroService) { }
+  constructor(private httpRequest: HttpClient, 
+              private roteador: Router, 
+              private cadastroService: CadastroService,
+              private pageDataService: PageDataService) { }
 
   ngOnInit() {
+
+    this.pageDataService
+      .atualizarTitulo('Cadastro - Cmail')
   }
 
   validaImagem(){
